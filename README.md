@@ -7,6 +7,9 @@
 
 To-Do's:
 - [X] User authentication
-- [ ] Registration interface
-- [ ] Homepage UI
-- [ ] Database configuration
+- [X] Registration interface
+- [X] Homepage UI
+- [X] Database configuration
+- [ ] Table Creation
+- [ ] Foreign keys and relations
+- [ ] Individual page uI's
