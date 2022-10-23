@@ -50,7 +50,7 @@ a {
 }
 
 a:hover {
-    color: #0458eb;
+    color: #edf0f5;
     text-decoration: underline;
 }
 
@@ -175,6 +175,7 @@ h1, .h1 {
 }
 
 .dashboard-nav a:hover {
+    color: #dbdbdb;
     text-decoration: none;
 }
 
