@@ -348,6 +348,7 @@ h1, .h1 {
     -ms-flex-pack: center;
     justify-content: center;
     color: #443ea2;
+    
 }
 
 .menu-toggle:hover, .menu-toggle:active, .menu-toggle:focus {
@@ -435,4 +436,20 @@ h1, .h1 {
     .dashboard-compact .dashboard-toolbar {
         left: 0;
     }
+}
+.card-body
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.box
+{
+   
+    height: 200px;
+    width:200px;
+    background-color: rgba(164, 155, 155, 0.3);
+    margin: 10px;
 }
