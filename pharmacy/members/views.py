@@ -12,10 +12,11 @@ def employee(request):
     if request.user.is_anonymous:
         return redirect("/login")
     showAll=EmpModel.objects.all
-    return render(request,'employee.html',{"data":showAll})    
+    return render(request,'employee.html',{'data':showAll})   
+     
 def insertEmp(request):
     if request.method=='POST':
-        if request.POST.get('e_id') and request.POST.get('empname') and request.POST.get('email') and request.POST.get('mobile') :
+        if request.POST.get('empname') and request.POST.get('email') and request.POST.get('mobile') and request.POST.get('e_id'):
             saverecord=EmpModel()
             saverecord.e_id=request.POST.get('e_id')
             saverecord.empname=request.POST.get('empname')
@@ -23,10 +24,10 @@ def insertEmp(request):
             saverecord.mobile=request.POST.get('mobile')
             saverecord.save()
             messages.success(request,'Employee '+saverecord.empname+'is saved successfully!')
-            return render(request,'insertEmp.html')
+            return render(request,'employee.html')
     else:
             return render(request,'insertEmp.html')
-
+    
 def loginUser(request):
     if request.method == "POST":
         username = request.POST.get('username')

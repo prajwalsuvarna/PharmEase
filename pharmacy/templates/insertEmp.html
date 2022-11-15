@@ -1,24 +1,31 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Employee ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email Address</th>
-        <th scope="col">Mobile</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for result in data  %}
-    <tr>
-    <td>{{result.e_id}}</td>
-    <td>{{result.empname}}</td>
-    <td>{{result.email}}</td>
-    <td>{{result.mobile}}</td>
-    </tr>
+<form class="container" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="exampleFormControlInput1" >Enter Employee ID</label>
+        <input type="number" class="form-control" name="e_id" id="exampleFormControlInput1" placeholder="1935">
+      </div>
+    <div class="form-group">
+      <label for="exampleFormControlInput1" >Enter Employee Name</label>
+      <input type="text" class="form-control" name="empname" id="exampleFormControlInput1" placeholder="JohnWick">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1" >Enter Email</label>
+        <input type="email" class="form-control" name="email" id="exampleFormControlInput1" placeholder="abcd@gmail.com">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlInput1" >Enter Mobile Number</label>
+        <input type="number" class="form-control" id="exampleFormControlInput1" name="mobile" placeholder="1234567809">
+      </div>
+      <input type="submit" value="insert"/>
+  </form>
+  <div class="form-group">
+    {% if messages %}
+    {% for mess in messages %}
+    <b style="color:green;">{{mess}}</b>
     {% endfor %}
-    </tbody> 
-  </table>
+    {% endif %}
+  </div>
 {% endblock content %}

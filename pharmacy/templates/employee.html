@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<div>
+    <a href="{% url 'insertEmp' %}">Create new Employee</a>
+</div>
 <table class="table">
     <thead>
       <tr>
@@ -11,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-    {% for result in data  %}
+    {% for result in data %}
     <tr>
     <td>{{result.e_id}}</td>
     <td>{{result.empname}}</td>
