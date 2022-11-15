@@ -1,6 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+
+  {% if messages %}
+    {% for mess in messages %}
+    <div class=" m-2 alert alert-success alert-dismissible fade show" role="alert">
+      <b style="color:green;">{{mess}}</b>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+
 <form class="container" method="POST">
     {% csrf_token %}
     <div class="form-group">
@@ -21,11 +34,4 @@
       </div>
       <input type="submit" value="insert"/>
   </form>
-  <div class="form-group">
-    {% if messages %}
-    {% for mess in messages %}
-    <b style="color:green;">{{mess}}</b>
-    {% endfor %}
-    {% endif %}
-  </div>
 {% endblock content %}

@@ -23,8 +23,8 @@ def insertEmp(request):
             saverecord.email=request.POST.get('email')
             saverecord.mobile=request.POST.get('mobile')
             saverecord.save()
-            messages.success(request,'Employee '+saverecord.empname+'is saved successfully!')
-            return render(request,'employee.html')
+            messages.success(request,'Employee '+saverecord.empname+' is saved successfully!')
+            return render(request,'insertEmp.html')
     else:
             return render(request,'insertEmp.html')
     
