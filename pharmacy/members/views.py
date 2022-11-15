@@ -2,11 +2,31 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
+from members.models import EmpModel
 # Create your views here.
 def index(request):
     if request.user.is_anonymous:
         return redirect("/login")
     return render(request,'index.html')
+def employee(request):
+    if request.user.is_anonymous:
+        return redirect("/login")
+    showAll=EmpModel.objects.all
+    return render(request,'employee.html',{"data":showAll})    
+def insertEmp(request):
+    if request.method=='POST':
+        if request.POST.get('e_id') and request.POST.get('empname') and request.POST.get('email') and request.POST.get('mobile') :
+            saverecord=EmpModel()
+            saverecord.e_id=request.POST.get('e_id')
+            saverecord.empname=request.POST.get('empname')
+            saverecord.email=request.POST.get('email')
+            saverecord.mobile=request.POST.get('mobile')
+            saverecord.save()
+            messages.success(request,'Employee '+saverecord.empname+'is saved successfully!')
+            return render(request,'insertEmp.html')
+    else:
+            return render(request,'insertEmp.html')
+
 def loginUser(request):
     if request.method == "POST":
         username = request.POST.get('username')
