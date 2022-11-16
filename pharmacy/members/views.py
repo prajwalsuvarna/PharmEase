@@ -80,14 +80,12 @@ def editEmp(request,e_id):
     editEmpObj=EmpModel.objects.get(e_id=e_id)
     return render(request,'editEmp.html',{"EmpModel":editEmpObj})
 
-def updateEmp(request,e_id):
-    print(e_id)
+def updateEmp(request, e_id):
     updateEmp=EmpModel.objects.get(e_id=e_id)
-    form=Empforms(request.POST,instance=updateEmp)
-    print(form)
-    print(form.is_valid())
-    if form.is_valid():
-        form.save()
-        messages.success("Record Updated SuccessFully!")
-        return render(request,'editEmp.html',{"EmpModel":updateEmp})
-
+    if request.method=='POST':
+        updateEmp.empname=request.POST.get('empname')
+        updateEmp.email=request.POST.get('email')
+        updateEmp.mobile=request.POST.get('mobile')
+        updateEmp.save()
+        messages.success(request,'Employee '+updateEmp.empname+' is updated successfully!')
+        return redirect('/employee')
