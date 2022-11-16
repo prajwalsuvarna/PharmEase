@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
 from members.models import EmpModel
-from members.forms import Empforms
 # Create your views here.
 def index(request):
     if request.user.is_anonymous:
