@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
 from members.models import EmpModel
+from members.forms import Empforms
 # Create your views here.
 def index(request):
     if request.user.is_anonymous:
@@ -78,3 +79,15 @@ def register(request):
 def editEmp(request,e_id):
     editEmpObj=EmpModel.objects.get(e_id=e_id)
     return render(request,'editEmp.html',{"EmpModel":editEmpObj})
+
+def updateEmp(request,e_id):
+    print(e_id)
+    updateEmp=EmpModel.objects.get(e_id=e_id)
+    form=Empforms(request.POST,instance=updateEmp)
+    print(form)
+    print(form.is_valid())
+    if form.is_valid():
+        form.save()
+        messages.success("Record Updated SuccessFully!")
+        return render(request,'editEmp.html',{"EmpModel":updateEmp})
+
