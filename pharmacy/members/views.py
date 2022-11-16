@@ -73,3 +73,8 @@ def register(request):
        return redirect('/login')
     else:
        return render(request,'register.html')
+
+# edit Employee details
+def editEmp(request,e_id):
+    editEmpObj=EmpModel.objects.get(e_id=e_id)
+    return render(request,'editEmp.html',{"EmpModel":editEmpObj})
