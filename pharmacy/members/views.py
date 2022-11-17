@@ -87,4 +87,10 @@ def updateEmp(request, e_id):
         updateEmp.mobile=request.POST.get('mobile')
         updateEmp.save()
         messages.success(request,'Employee '+updateEmp.empname+' is updated successfully!')
-        return redirect('/employee')
+        print(messages)
+        return render(request,'editEmp.html',{"EmpModel":updateEmp})
+
+def deleteEmp(e_id):
+    delEmployee=EmpModel.objects.get(e_id=e_id)
+    delEmployee.delete()
+    return redirect('/employee')
