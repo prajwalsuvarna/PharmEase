@@ -13,7 +13,6 @@ class EmpModel(models.Model):
     empname=models.CharField(max_length=100)
     email=models.CharField(max_length=100)
     e_id=models.IntegerField(primary_key=True)
-    mobile=models.IntegerField()
+    mobile=models.BigIntegerField()
     class Meta:
         db_table="employee"
-

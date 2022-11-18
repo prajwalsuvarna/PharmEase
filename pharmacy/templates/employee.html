@@ -3,6 +3,7 @@
 {% block content %}
 <div class="m-2">
     <a href="{% url 'insertEmp' %}">Create new Employee</a>
+    <p>{{emp_count}}</p>
 </div>
 <table class="table m-2">
     <thead>
@@ -11,6 +12,7 @@
         <th scope="col">Name</th>
         <th scope="col">Email Address</th>
         <th scope="col">Mobile</th>
+        <th scope="col" colspan="2">Edit/Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -20,8 +22,9 @@
     <td>{{result.empname}}</td>
     <td>{{result.email}}</td>
     <td>{{result.mobile}}</td>
-    <td><a href="editEmp/{{result.e_id}}">Edit</a></td>
-    <td><a href="deleteEmp/{{result.e_id}}" onclick="return confirm('Are you sure you want to delete?')">Delete</a></td>
+  
+    <td><a href="editEmp/{{result.e_id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+    <td><a href="deleteEmp/{{result.e_id}}" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash"></i></a></td>
     </tr>
     {% endfor %}
     </tbody> 

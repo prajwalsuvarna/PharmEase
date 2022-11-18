@@ -3,22 +3,26 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
 from members.models import EmpModel
+from django.db.models import Max
 # Create your views here.
 def index(request):
+    showAll=EmpModel.objects.all()
+    emp_count=showAll.count()
     if request.user.is_anonymous:
         return redirect("/login")
-    return render(request,'index.html')
+    return render(request,'index.html',{'emp_count':emp_count})
+
 def employee(request):
     if request.user.is_anonymous:
         return redirect("/login")
-    showAll=EmpModel.objects.all
+    showAll=EmpModel.objects.all()
     return render(request,'employee.html',{'data':showAll})   
-     
+
 def insertEmp(request):
+    e_id=1001 if EmpModel.objects.count()==0 else EmpModel.objects.aggregate(max=Max('e_id'))["max"]+1
+    saverecord=EmpModel()
     if request.method=='POST':
-        if request.POST.get('empname') and request.POST.get('email') and request.POST.get('mobile') and request.POST.get('e_id'):
-            saverecord=EmpModel()
-            saverecord.e_id=request.POST.get('e_id')
+            saverecord.e_id=e_id
             saverecord.empname=request.POST.get('empname')
             saverecord.email=request.POST.get('email')
             saverecord.mobile=request.POST.get('mobile')
