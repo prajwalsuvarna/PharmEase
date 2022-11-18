@@ -94,7 +94,7 @@ def updateEmp(request, e_id):
         print(messages)
         return render(request,'editEmp.html',{"EmpModel":updateEmp})
 
-def deleteEmp(e_id):
+def deleteEmp(self,e_id):
     delEmployee=EmpModel.objects.get(e_id=e_id)
     delEmployee.delete()
     return redirect('/employee')
