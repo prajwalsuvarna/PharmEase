@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<a href="{% url 'distributor' %}">Back</a>
+{% if messages %}
+{% for mess in messages %}
+<div class=" m-2 alert alert-success alert-dismissible fade show"  id="alert" role="alert">
+  <b style="color:green;">{{mess}}</b>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+{% endif %}
+
+
+<form class="container" method="POST"  action="/updateDist/{{DistModel.dist_id}}">
+{% csrf_token %}
+<div class="form-group">
+    <label for="exampleFormControlInput1" >Distributor ID</label>
+    <input type="number" class="form-control" name="dist_id" id="exampleFormControlInput1" value="{{DistModel.dist_id}}" placeholder="id " readonly>
+  </div>
+<div class="form-group">
+  <label for="exampleFormControlInput1" >Edit Distributor Name</label>
+  <input type="text" class="form-control" name="dist_name" id="exampleFormControlInput1" value="{{DistModel.dist_name}}" placeholder="JohnWick">
+</div>
+<div class="form-group">
+    <label for="exampleFormControlInput1" >Edit Email</label>
+    <input type="email" class="form-control" name="d_email" id="exampleFormControlInput1" value="{{DistModel.d_email}}" placeholder="abcd@gmail.com">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1" >Edit Mobile Number</label>
+    <input type="number" class="form-control" id="exampleFormControlInput1" name="d_pno" value="{{DistModel.d_pno}}" placeholder="1234567809">
+  </div>
+  <input type="submit" value="Save"/>
+</form>
+{% endblock content %}

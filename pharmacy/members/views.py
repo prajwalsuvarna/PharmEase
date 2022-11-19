@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
-from members.models import EmpModel
+from members.models import EmpModel,DistModel,DrgModel
 from django.db.models import Max
 # Create your views here.
 def index(request):
@@ -17,6 +17,12 @@ def employee(request):
         return redirect("/login")
     showAll=EmpModel.objects.all()
     return render(request,'employee.html',{'data':showAll})   
+
+def distributor(request):
+    if request.user.is_anonymous:
+        return redirect("/login")
+    showAll=DistModel.objects.all()
+    return render(request,'dist.html',{'data':showAll})   
 
 def drugs(request):
     if request.user.is_anonymous:
@@ -37,6 +43,19 @@ def insertEmp(request):
             return render(request,'insertEmp.html')
     else:
             return render(request,'insertEmp.html')
+def insertDist(request):
+    dist_id=401 if DistModel.objects.count()==0 else DistModel.objects.aggregate(max=Max('dist_id'))["max"]+1
+    saverecord=DistModel()
+    if request.method=='POST':
+            saverecord.dist_id=dist_id
+            saverecord.dist_name=request.POST.get('dist_name')
+            saverecord.d_email=request.POST.get('d_email')
+            saverecord.d_pno=request.POST.get('d_pno')
+            saverecord.save()
+            messages.success(request,'Distributor  '+saverecord.dist_name+' is saved successfully!')
+            return render(request,'insertDist.html')
+    else:
+            return render(request,'insertDist.html')
     
 def loginUser(request):
     if request.method == "POST":
@@ -100,7 +119,31 @@ def updateEmp(request, e_id):
         print(messages)
         return render(request,'editEmp.html',{"EmpModel":updateEmp})
 
+def editDist(request,dist_id):
+    editDistObj=DistModel.objects.get(dist_id=dist_id)
+    return render(request,'editDist.html',{"DistModel":editDistObj})
+
+def updateDist(request, dist_id):
+    updateDist=DistModel.objects.get(dist_id=dist_id)
+    if request.method=='POST':
+        updateDist.dist_name=request.POST.get('dist_name')
+        updateDist.d_email=request.POST.get('d_email')
+        updateDist.d_pno=request.POST.get('d_pno')
+        updateDist.save()
+        messages.success(request,'Distributor'+updateDist.dist_name+' is updated successfully!')
+        print(messages)
+        return render(request,'editDist.html',{"DistModel":updateDist})
+
+def deleteDist(self,dist_id):
+    delDist=DistModel.objects.filter(dist_id=dist_id)
+    delDist.delete()
+    return redirect('/distributor')
+
+
 def deleteEmp(self,e_id):
-    delEmployee=EmpModel.objects.get(e_id=e_id)
+    delEmployee=EmpModel.objects.filter(e_id=e_id)
     delEmployee.delete()
     return redirect('/employee')
+
+
+
