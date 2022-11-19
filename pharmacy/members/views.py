@@ -18,6 +18,12 @@ def employee(request):
     showAll=EmpModel.objects.all()
     return render(request,'employee.html',{'data':showAll})   
 
+def drugs(request):
+    if request.user.is_anonymous:
+        return redirect("/login")
+    
+    return render(request,'drug.html')   
+
 def insertEmp(request):
     e_id=1001 if EmpModel.objects.count()==0 else EmpModel.objects.aggregate(max=Max('e_id'))["max"]+1
     saverecord=EmpModel()
