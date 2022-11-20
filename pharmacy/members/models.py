@@ -34,10 +34,8 @@ class DrgModel(models.Model):
     dg_id=models.IntegerField(primary_key=True)
     dgname=models.CharField(max_length=100)
     stock=models.IntegerField()
-    qty=models.IntegerField()
     dist_id = models.ForeignKey(DistModel, on_delete=models.CASCADE)
-    cprice=models.IntegerField()
-    sprice=models.IntegerField()
+    price=models.IntegerField()
     class Meta:
         db_table="Drugs"
     def __str__(self):

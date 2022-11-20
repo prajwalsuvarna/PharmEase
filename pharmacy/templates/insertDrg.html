@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+  {% if messages %}
+    {% for mess in messages %}
+    <div class=" m-2 alert alert-success alert-dismissible fade show" id="alert" role="alert">
+      <b style="color:green;">{{mess}}</b>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+
+<form class="container" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="exampleFormControlInput1" >Enter Drug Name</label>
+      <input type="text" class="form-control" name="dgname" id="exampleFormControlInput1" placeholder="JohnWick">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1" > Enter Total Stock</label>
+        <input type="number" class="form-control" name="stock" id="exampleFormControlInput1" placeholder="abcd@gmail.com">
+      </div>
+      <div class="form-group"> 
+        <label for="exampleFormControlInput1" >Enter the Price</label>
+        <input type="number" class="form-control" id="exampleFormControlInput1" name="price" placeholder="1234567809">
+      </div>
+      <div class="form-group">
+        <label for="dist_id">Select Distributor:</label>
+<select name="dist_id" id="dist_id" >
+    {% for res  in  data %}
+    <option value="{{res.dist_id}}">{{res.dist_name}}</option>
+    {% endfor %}
+</select><br>
+      <input type="submit" value="insert"/>
+  </form>
+{% endblock content %}

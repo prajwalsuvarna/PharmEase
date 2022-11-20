@@ -8,9 +8,11 @@ from django.db.models import Max
 def index(request):
     showAll=EmpModel.objects.all()
     emp_count=showAll.count()
+    showAll=DistModel.objects.all()
+    dist_count=showAll.count()
     if request.user.is_anonymous:
         return redirect("/login")
-    return render(request,'index.html',{'emp_count':emp_count})
+    return render(request,'index.html',{'emp_count':emp_count,'dist_count':dist_count})
 
 def employee(request):
     if request.user.is_anonymous:
@@ -27,8 +29,8 @@ def distributor(request):
 def drugs(request):
     if request.user.is_anonymous:
         return redirect("/login")
-    
-    return render(request,'drug.html')   
+    showAll=DrgModel.objects.all()
+    return render(request,'drug.html',{'data':showAll})   
 
 def insertEmp(request):
     e_id=1001 if EmpModel.objects.count()==0 else EmpModel.objects.aggregate(max=Max('e_id'))["max"]+1
@@ -56,6 +58,24 @@ def insertDist(request):
             return render(request,'insertDist.html')
     else:
             return render(request,'insertDist.html')
+
+def insertDrg(request):
+    dg_id=120 if DrgModel.objects.count()==0 else DrgModel.objects.aggregate(max=Max('dg_id'))["max"]+1
+    saverecord=DrgModel()
+    showAll=DistModel.objects.all()
+    print(showAll)
+    if request.method=='POST':
+            print(request.POST)
+            saverecord.dg_id=dg_id
+            saverecord.dgname=request.POST.get('dgname')
+            saverecord.stock=request.POST.get('stock')
+            saverecord.price=request.POST.get('price')
+            saverecord.dist_id_id=request.POST.get('dist_id')
+            saverecord.save()
+            messages.success(request,'Distributor  '+saverecord.dgname+' is saved successfully!')
+            return render(request,'insertDrg.html',{"data":showAll})
+    else:
+            return render(request,'insertDrg.html',{"data":showAll})
     
 def loginUser(request):
     if request.method == "POST":
