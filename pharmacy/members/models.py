@@ -41,3 +41,17 @@ class DrgModel(models.Model):
     def __str__(self):
         return self.dgname
 
+class Bill(models.Model):
+    sale_id=models.IntegerField(primary_key=True)
+    cname=models.CharField(max_length=100)
+    phone_no=models.BigIntegerField()
+    stock=models.IntegerField()
+    age=models.IntegerField()
+    drg_id=models.ManyToManyField(DrgModel)
+    amt=models.IntegerField()
+    class Meta:
+        db_table="Bill"
+    def __str__(self):
+        return self.sale_id
+
+
