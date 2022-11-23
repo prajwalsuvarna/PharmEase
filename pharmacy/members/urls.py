@@ -21,6 +21,8 @@ urlpatterns = [
     path('insertDrg/',views.insertDrg,name="insertDrg"),
     # path('Drgributor/editDrg/<int:dg_id>',views.editDrg,name="editDrg"),
     # path('updateDrg/<int:dg_id>',views.updateDrg,name="updateDrg"),
-    path('user/',views.user,name="user")
+    path('user/',views.user,name="user"),
+    path('bill/',views.bill,name="bill"),
+    path('newBill/',views.newBill,name="newBill")
     
 ]

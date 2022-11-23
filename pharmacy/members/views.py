@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
-from members.models import EmpModel,DistModel,DrgModel
+from members.models import EmpModel,DistModel,DrgModel,Bill
 from django.db.models import Max
 # Create your views here.
 def index(request):
@@ -173,5 +173,12 @@ def deleteEmp(self,e_id):
     delEmployee.delete()
     return redirect('/employee')
 
+def bill(request):
+    if request.user.is_anonymous:
+        return redirect("/login")
+    showAll=Bill.objects.all()
+    return render(request,'bill.html',{'data':showAll})  
 
-
+def newBill(request):
+    showAll2=DrgModel.objects.all()
+    return render(request,'newBill.html',{'data':showAll2})

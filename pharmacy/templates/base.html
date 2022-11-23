@@ -26,7 +26,7 @@
                 <a
                 href="/distributor" class="dashboard-nav-item"><i class="fa fa-id-card-o"></i> Distributer </a>
                 <a
-                href="#" class="dashboard-nav-item"><i class="fa fa-money"></i> Billling </a>
+                href="/bill" class="dashboard-nav-item"><i class="fa fa-money"></i> Billling </a>
             <a href="/user" class="dashboard-nav-item "><i
                     class="fa fa-users"></i> Users </a>
                
@@ -43,6 +43,30 @@
     setTimeout(function () {
         $('#alert').alert('close');
     }, 3000);
+
+    var count=1
+function add_more_feild()
+{
+    count+=1;
+    html=`
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="dist_id${count}">Select Medicine :</label>
+        </div>
+        <select name="dist_id" id="dist_id${count}" class="custom-select" >
+            {% for res  in  data %}
+            <option value="{{res.dg_id}}">{{res.dgname}}</option>
+            {% endfor %}
+        </select>
+      </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1" >Quantity</label>
+    <input type="number" class="form-control" id="stock${count}" name="stock" placeholder="1234567809">
+  </div>
+    `
+    var form=document.getElementById('bill')
+    form.innerHTML+=html
+}
 </script>
 <script src="{% static 'node_modules/vanilla-tilt/dist/vanilla-tilt.js' %}"></script> 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

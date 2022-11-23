@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+  {% if messages %}
+    {% for mess in messages %}
+    <div class=" m-2 alert alert-success alert-dismissible fade show" id="alert" role="alert">
+      <b style="color:green;">{{mess}}</b>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+
+<form class="container" id="bill" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="exampleFormControlInput1" >Enter Customer Name</label>
+      <input type="text" class="form-control" name="dist_name" id="exampleFormControlInput1" placeholder="JohnWick">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1" >Enter Phone No</label>
+        <input type="email" class="form-control" name="d_email" id="exampleFormControlInput1" placeholder="abcd@gmail.com">
+      </div>
+
+     <!-- ////////////// -->
+     <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="dist_id1">Select Medicine :</label>
+        </div>
+        <select name="dist_id" id="dist_id1" class="custom-select" >
+            {% for res  in  data %}
+            <option value="{{res.dg_id}}">{{res.dgname}}</option>
+            {% endfor %}
+        </select>
+      </div>
+
+     <!-- ///////// -->
+      <div class="form-group">
+        <label for="exampleFormControlInput1" >Quantity</label>
+        <input type="number" class="form-control" id="exampleFormControlInput1" name="d_pno" placeholder="1234567809">
+      </div>
+    </form>
+    <div class="form-group">
+      <button type="button" class="btn btn-primary" onclick="add_more_feild()">Add+</button>
+      <input type="submit" value="insert"/>
+    </div>
+{% endblock content %}
