@@ -30,7 +30,15 @@ def drugs(request):
     if request.user.is_anonymous:
         return redirect("/login")
     showAll=DrgModel.objects.all()
-    return render(request,'drug.html',{'data':showAll})   
+    return render(request,'drug.html',{'data':showAll})  
+
+def user(request):
+    if request.user.is_anonymous:
+        return redirect("/login")
+    showAll=User.objects.all()
+    showAll1=EmpModel.objects.all()
+    return render(request,'user.html',{'data':showAll,'data1':showAll1})  
+    
 
 def insertEmp(request):
     e_id=1001 if EmpModel.objects.count()==0 else EmpModel.objects.aggregate(max=Max('e_id'))["max"]+1

@@ -1,13 +1,5 @@
 from django.db import models
 # Create your models here.
-
-class User(models.Model):
-    user_id=models.IntegerField(primary_key=True)
-    entity_id=models.IntegerField()
-    user_name=models.CharField(max_length=100)
-    emp_id=models.IntegerField()
-    user_password=models.CharField(max_length=200)
-    is_active=models.BooleanField(default=True)
     
 class EmpModel(models.Model):
     empname=models.CharField(max_length=100)
@@ -18,6 +10,14 @@ class EmpModel(models.Model):
         db_table="employee"
     def __str__(self):
         return self.empname
+
+class User(models.Model):
+    user_id=models.IntegerField(primary_key=True)
+    entity_id=models.IntegerField()
+    user_name=models.CharField(max_length=100)
+    emp_id=models.ForeignKey(EmpModel, on_delete=models.CASCADE)
+    user_password=models.CharField(max_length=200)
+    is_active=models.BooleanField(default=True)
 
 class DistModel(models.Model):
     dist_id=models.IntegerField(primary_key=True)
