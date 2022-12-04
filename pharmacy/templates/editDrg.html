@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<a href="{% url 'drugs' %}">Back</a>
+{% if messages %}
+{% for mess in messages %}
+<div class=" m-2 alert alert-success alert-dismissible fade show"  id="alert" role="alert">
+  <b style="color:green;">{{mess}}</b>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+{% endif %}
+
+
+<form class="container" method="POST"  action="/updateDrg/{{DrgModel.dg_id}}">
+{% csrf_token %}
+<div class="form-group">
+    <label for="exampleFormControlInput1" >Medicine ID</label>
+    <input type="number" class="form-control" name="dg_id" id="exampleFormControlInput1" value="{{DrgModel.dg_id}}" placeholder="id " readonly>
+  </div>
+<div class="form-group">
+  <label for="exampleFormControlInput1" >Edit Medicine Name</label>
+  <input type="text" class="form-control" name="dgname" id="exampleFormControlInput1" value="{{DrgModel.dgname}}" placeholder="JohnWick">
+</div>
+<div class="form-group">
+    <label for="exampleFormControlInput1" > Edit Total Stock</label>
+    <input type="number" class="form-control" name="stock" id="exampleFormControlInput1" placeholder="abcd@gmail.com" value={{DrgModel.stock}}>
+  </div>
+  <div class="form-group"> 
+    <label for="exampleFormControlInput1" >Edit  Price</label>
+    <input type="number" class="form-control" id="exampleFormControlInput1" name="price" placeholder="1234567809" value={{DrgModel.price}}>
+  </div>
+  <div class="form-group">
+    <label for="dist_id">Select Distributor:</label>
+<select name="dist_id" id="dist_id" >
+{% for res  in  data %}
+<option value="{{res.dist_id}}">{{res.dist_name}}</option>
+{% endfor %}
+</select><br>
+  <input type="submit" value="Save"/>
+</form>
+{% endblock content %}

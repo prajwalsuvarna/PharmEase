@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-
+<a href="{% url 'bill' %}" onclick="newId();" >Back</a>
   {% if messages %}
     {% for mess in messages %}
     <div class=" m-2 alert alert-success alert-dismissible fade show" id="alert" role="alert">
@@ -13,12 +13,12 @@
     {% endfor %}
     {% endif %}
 
-<form action="" method="post" id="form1">
+<form action="" method="post" id="form1"  onsubmit="retain()">
   {% csrf_token %}
-  <input type="number" name="sale_id" id="sale_id"  placeholder="sale_id" value="{{sale_id}}" readonly>
-<input type="text" name="cname" id="cname" placeholder="Enter Customer Name">
-<input type="number" name="phone_no" id="pno" placeholder="9998887771">
-<input type="number" name="age" id="age" placeholder="20"> <br/>
+  <input type="number" name="sale_id" id="sale_id"  placeholder="sale_id"  readonly>
+<input type="text" name="cname" id="cname" placeholder="Enter Customer Name" value="{{saverecord.cname}}" >
+<input type="number" name="phone_no" id="pno" placeholder="9998887771" value="{{saverecord.phone_no}}">
+<input type="number" name="age" id="age" placeholder="20" value="{{saverecord.age}}"> <br/>
 <button type="button" class="btn btn-primary p-1 m-2" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Select medicine</button>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

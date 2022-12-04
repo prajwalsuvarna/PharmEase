@@ -105,7 +105,10 @@ def insertDrg(request):
         return render(request, 'insertDrg.html', {"data": showAll})
     else:
         return render(request, 'insertDrg.html', {"data": showAll})
-
+          
+def editDrg(request, dg_id):
+    editDrgObj = DrgModel.objects.get(dg_id=dg_id)
+    return render(request, 'editDrg.html', {"DrgModel": editDrgObj})
 
 def loginUser(request):
     if request.method == "POST":
@@ -183,6 +186,8 @@ def editDist(request, dist_id):
     return render(request, 'editDist.html', {"DistModel": editDistObj})
 
 
+
+
 def updateDist(request, dist_id):
     updateDist = DistModel.objects.get(dist_id=dist_id)
     if request.method == 'POST':
@@ -195,6 +200,17 @@ def updateDist(request, dist_id):
         print(messages)
         return render(request, 'editDist.html', {"DistModel": updateDist})
 
+def updateDrg(request, dg_id):
+    updateDrg = DrgModel.objects.get(dg_id=dg_id)
+    if request.method == 'POST':
+        updateDrg.dgname = request.POST.get('dgname')
+        updateDrg.stock = request.POST.get('stock')
+        updateDrg.price = request.POST.get('price')
+        updateDrg.save()
+        messages.success(request, 'Medicine ' +
+                         updateDrg.dgname+' is updated successfully!')
+        print(messages)
+        return render(request, 'editDrg.html', {"DrgModel": updateDrg})
 
 def deleteDist(self, dist_id):
     delDist = DistModel.objects.filter(dist_id=dist_id)
@@ -209,26 +225,22 @@ def deleteEmp(self, e_id):
 
 
 def bill(request):
-    sale_id = 1900 if Bill.objects.count() == 0 else Bill.objects.aggregate(
-        max=Max('sale_id'))["max"]+1
-    print(sale_id)
-    data1 = sale_id
     if request.user.is_anonymous:
         return redirect("/login")
     showAll = Bill.objects.all()
-    return render(request, 'bill.html', {'data': showAll, 'data1': data1})
+    return render(request, 'bill.html', {'data': showAll,})
 
 
 def newBill(request):
-    sale_id = 1900
-    print(sale_id)
+    # sale_id = 1900 if Bill.objects.count() == 0 else Bill.objects.aggregate( max=Max('sale_id'))["max"]+1
+    # print(sale_id)
     showAll2 = DrgModel.objects.all()
     saverecord = Bill()
     if request.method == 'POST':
         print(request.POST)
         a = request.POST.get('drg_id')
         d1 = DrgModel.objects.get(dg_id=a)
-        saverecord.sale_id = sale_id
+        saverecord.sale_id = request.POST.get('sale_id')
         saverecord.cname = request.POST.get('cname')
         saverecord.age = request.POST.get('age')
         saverecord.phone_no = request.POST.get('phone_no')
@@ -244,6 +256,6 @@ def newBill(request):
         saverecord.drg_id.add(d1)
         print(saverecord)
         # messages.success(request,'  '+saverecord.drg_id+' is saved successfully!')
-        return render(request, 'newBill.html', {"data": showAll2, })
+        return render(request, 'newBill.html', {"data": showAll2,"saverecord":saverecord })
     else:
-        return render(request, 'newBill.html', {"data": showAll2, "sale_id": sale_id})
+        return render(request, 'newBill.html', {"data": showAll2} )
