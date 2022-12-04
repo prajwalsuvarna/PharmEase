@@ -13,38 +13,49 @@
     {% endfor %}
     {% endif %}
 
+<form action="" method="post" id="form1">
+  {% csrf_token %}
+  <input type="number" name="sale_id" id="sale_id"  placeholder="sale_id" value="{{sale_id}}" readonly>
+<input type="text" name="cname" id="cname" placeholder="Enter Customer Name">
+<input type="number" name="phone_no" id="pno" placeholder="9998887771">
+<input type="number" name="age" id="age" placeholder="20"> <br/>
+<button type="button" class="btn btn-primary p-1 m-2" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Select medicine</button>
 
-<form class="container" id="bill" method="POST">
-    {% csrf_token %}
-    <div class="form-group">
-      <label for="exampleFormControlInput1" >Enter Customer Name</label>
-      <input type="text" class="form-control" name="dist_name" id="exampleFormControlInput1" placeholder="JohnWick">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Select Medicine</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+           <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="dist_id1">Select Medicine :</label>
+      </div>
+      <select name="drg_id" id="drg_id" class="custom-select" >
+          {% for res  in  data %}
+          <option value="{{res.dg_id}}">{{res.dgname}}</option>
+          {% endfor %}
+      </select>
     </div>
-    <div class="form-group">
-        <label for="exampleFormControlInput1" >Enter Phone No</label>
-        <input type="email" class="form-control" name="d_email" id="exampleFormControlInput1" placeholder="abcd@gmail.com">
-      </div>
 
-     <!-- ////////////// -->
-     <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="dist_id1">Select Medicine :</label>
-        </div>
-        <select name="dist_id" id="dist_id1" class="custom-select" >
-            {% for res  in  data %}
-            <option value="{{res.dg_id}}">{{res.dgname}}</option>
-            {% endfor %}
-        </select>
-      </div>
-
-     <!-- ///////// -->
-      <div class="form-group">
-        <label for="exampleFormControlInput1" >Quantity</label>
-        <input type="number" class="form-control" id="exampleFormControlInput1" name="d_pno" placeholder="1234567809">
-      </div>
-    </form>
     <div class="form-group">
-      <button type="button" class="btn btn-primary" onclick="add_more_feild()">Add+</button>
-      <input type="submit" value="insert"/>
+      <label for="exampleFormControlInput1" >Quantity</label>
+      <input type="number" class="form-control" id="stock" name="stock" placeholder="12 etc">
+    </div>   
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit"class="btn btn-primary" form="form1" value="submit">Save</button>
+      </div>
     </div>
+  </div>
+</div>
+
+
+
+</form>
 {% endblock content %}

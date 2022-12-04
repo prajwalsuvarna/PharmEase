@@ -9,19 +9,20 @@
         <tr>
           <th scope="col">Sale ID</th>
           <th scope="col">Customer Name</th>
+          <th scope="col">Phone No</th>
           <th scope="col">Date</th>
           <th scope="col">Total Amount</th>
-          <th scope="col">Details</th>
           <th scope="col" colspan="2">Edit/Delete</th>
         </tr>
       </thead>
       <tbody>
       {% for result in data %}
       <tr>
-      <td>{{result.dg_id}}</td>
-      <td>{{result.dgname}}</td>
-      <td>{{result.stock}}</td>
-      <td>{{result.price}}</td>
+      <td>{{result.sale_id}}</td>
+      <td>{{result.cname}}</td>
+      <td>{{result.phone_no}}</td>
+      <td>{{result.date}}</td>
+      <td>{{result.amt}}</td>
       <td>{{result.dist_id}}</td>
     
       <td><a href="editEmp/{{result.dg_id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
