@@ -10,6 +10,7 @@ To-Do's:
 - [X] Registration interface
 - [X] Homepage UI
 - [X] Database configuration
-- [ ] Table Creation
-- [ ] Foreign keys and relations
-- [ ] Individual page uI's
+- [X] Table Creation
+- [X] Foreign keys and relations
+- [X] Individual page uI's
+- [ ] Queries(The hard part)
