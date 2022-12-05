@@ -237,24 +237,26 @@ def newBill(request):
     showAll2 = DrgModel.objects.all()
     saverecord = Bill()
     if request.method == 'POST':
-        print(request.POST)
+        # print(request.POST)
         a = request.POST.get('drg_id')
         d1 = DrgModel.objects.get(dg_id=a)
         saverecord.sale_id = request.POST.get('sale_id')
+        sale_id=request.POST.get('sale_id')
+        try:
+            billcr = Bill.objects.get(sale_id=sale_id)
+        except Bill.DoesNotExist:
+            billcr=None
         saverecord.cname = request.POST.get('cname')
         saverecord.age = request.POST.get('age')
         saverecord.phone_no = request.POST.get('phone_no')
         saverecord.stock = request.POST.get('stock')
         saverecord.emp_name = str(request.user)
-        print(d1.price)
-        print(saverecord.stock)
-        saverecord.amt = int(saverecord.stock) * int(d1.price)
-        print(saverecord.amt)
-        print(request.user)
+        if billcr==None:
+            saverecord.amt =(int(saverecord.stock) * int(d1.price))
+        else:
+            saverecord.amt = billcr.amt +  (int(saverecord.stock) * int(d1.price))
         saverecord.save()
-
         saverecord.drg_id.add(d1)
-        print(saverecord)
         # messages.success(request,'  '+saverecord.drg_id+' is saved successfully!')
         return render(request, 'newBill.html', {"data": showAll2,"saverecord":saverecord })
     else:
