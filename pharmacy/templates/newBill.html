@@ -54,8 +54,27 @@
     </div>
   </div>
 </div>
-
-
-
 </form>
+<table class="table table-dark table-bordered">
+  <thead>
+    <tr>
+      <th>Med id</th>
+      <th>Medicine Name</th>
+      <th>Price per Quantity</th>
+      <th>Cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i,med in zp %}
+    <tr>
+ <td>{{i.dg_id}}</td>
+ <td>{{i.dgname}}</td>
+ <td>{{i.price}}</td>
+ <td>{{med}}</td>
+</tr>
+  {% endfor %} 
+  </tbody>
+</table>
+<p>Total ammount : {{saverecord.amt}}<p>
+ 
 {% endblock content %}

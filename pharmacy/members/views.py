@@ -230,10 +230,11 @@ def bill(request):
     showAll = Bill.objects.all()
     return render(request, 'bill.html', {'data': showAll,})
 
-
+peramt=dict()
 def newBill(request):
     # sale_id = 1900 if Bill.objects.count() == 0 else Bill.objects.aggregate( max=Max('sale_id'))["max"]+1
     # print(sale_id)
+    # peramt={}
     showAll2 = DrgModel.objects.all()
     saverecord = Bill()
     if request.method == 'POST':
@@ -251,13 +252,27 @@ def newBill(request):
         saverecord.phone_no = request.POST.get('phone_no')
         saverecord.stock = request.POST.get('stock')
         saverecord.emp_name = str(request.user)
+        b=str(a)
+        peramt[b]=(int(saverecord.stock) * int(d1.price))
+        print(peramt)
         if billcr==None:
             saverecord.amt =(int(saverecord.stock) * int(d1.price))
         else:
             saverecord.amt = billcr.amt +  (int(saverecord.stock) * int(d1.price))
         saverecord.save()
         saverecord.drg_id.add(d1)
+        sid = Bill.objects.get(sale_id=saverecord.sale_id)
+        medicines=sid.drg_id.all()
+        print(medicines)
+        medicines2=list(medicines)
+        print(medicines2)
+        peritem2=list(peramt.values())
+        print(peritem2)
+        zp=zip(medicines2,peritem2)
+        print(zp,type(medicines2))
         # messages.success(request,'  '+saverecord.drg_id+' is saved successfully!')
-        return render(request, 'newBill.html', {"data": showAll2,"saverecord":saverecord })
+        return render(request, 'newBill.html', {"data": showAll2,"saverecord":saverecord ,"zp":zp})
     else:
-        return render(request, 'newBill.html', {"data": showAll2} )
+        peramt.clear()
+        print(peramt)
+        return render(request, 'newBill.html', {"data": showAll2,"peramt":peramt} )

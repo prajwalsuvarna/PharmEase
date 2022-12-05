@@ -41,6 +41,8 @@ class DrgModel(models.Model):
         db_table="Drugs"
     def __str__(self):
         return self.dgname
+    def __iter__(self):
+        return iter(self.dgname)
 
 class Bill(models.Model):
     sale_id=models.IntegerField(primary_key=True)
