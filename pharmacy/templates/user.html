@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <div class="m-2">
-    <a href="{% url 'insertDrg' %}">Create new Employee</a>
+    <a href="{% url 'register' %}" class="btn btn-secondary">Create new User</a>
 </div>
 <table class="table table-hover table-dark">
     <thead>
@@ -21,7 +21,7 @@
       <tr>
       <td>{{result.id}}</td>
       <td>{{result.username}}</td>
-      <td>{{result.first_name}}</td>
+      <td>{{result.users.emp_id}}</td>
       <td>{{result.email}}</td>
       <td>{{result.last_login}}</td>
       <td>{{result.date_joined}}</td>

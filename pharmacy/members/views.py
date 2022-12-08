@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from members.models import EmpModel, DistModel, DrgModel, Bill
+from members.models import EmpModel, DistModel, DrgModel, Bill,Users
 from django.db.models import Max
 from datetime import datetime
 now = datetime.now()
@@ -133,11 +133,15 @@ def logoutUser(request):
 
 
 def register(request):
+    employees=EmpModel.objects.all()
+    for emp in employees:
+        print(emp.e_id)
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         username = request.POST['username']
         email = request.POST['email']
+        emp_id=request.POST['emp_id']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
 
@@ -152,13 +156,22 @@ def register(request):
                 user = User.objects.create_user(
                     username=username, password=password1, email=email, first_name=first_name, last_name=last_name)
                 user.save()
-                print('User Created')
+
+                users=Users()
+                ep_id=EmpModel.objects.get(e_id=emp_id)
+                users.emp_id=ep_id
+                users.user=user
+                try:
+                    users.save()
+                except Exception as e:
+                    messages.info(request, 'Employee already has a been registered!')
+                    return redirect('/register')
         else:
             messages.info(request, 'Password not matching')
             return redirect('/register')
-        return redirect('/login')
+        return redirect('/user')
     else:
-        return render(request, 'register.html')
+        return render(request, 'register.html',{'employees':employees})
 
 # edit Employee details
 
@@ -276,3 +289,8 @@ def newBill(request):
         peramt.clear()
         print(peramt)
         return render(request, 'newBill.html', {"data": showAll2,"peramt":peramt} )
+
+def deletedrg(self, dg_id):
+    delDrg = DrgModel.objects.filter(dg_id=dg_id)
+    delDrg.delete()
+    return redirect('/drugs')

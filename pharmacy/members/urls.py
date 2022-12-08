@@ -18,6 +18,7 @@ urlpatterns = [
     path('updateDist/<int:dist_id>',views.updateDist,name="updateDist"),
     path('distributor/deleteDist/<int:dist_id>',views.deleteDist,name="deleteDist"),
     path('drugs/',views.drugs,name="drugs"),
+    path('drugs/deleteDrg/<int:dg_id>',views.deletedrg,name="deletedrg"),
     path('insertDrg/',views.insertDrg,name="insertDrg"),
     path('drugs/drugs/editDrg/<int:dg_id>',views.editDrg,name="editDrg"),
     path('updateDrg/<int:dg_id>',views.updateDrg,name="updateDrg"),

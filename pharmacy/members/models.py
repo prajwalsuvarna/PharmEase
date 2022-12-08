@@ -1,5 +1,7 @@
 from django.db import models
 import datetime
+from django.contrib.auth.models import User
+
 # Create your models here.
     
 class EmpModel(models.Model):
@@ -12,13 +14,14 @@ class EmpModel(models.Model):
     def __str__(self):
         return self.empname
 
-class User(models.Model):
-    user_id=models.IntegerField(primary_key=True)
-    entity_id=models.IntegerField()
-    user_name=models.CharField(max_length=100)
-    emp_id=models.ForeignKey(EmpModel, on_delete=models.CASCADE)
-    user_password=models.CharField(max_length=200)
-    is_active=models.BooleanField(default=True)
+class Users(models.Model):
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    emp_id=models.OneToOneField(EmpModel, on_delete=models.CASCADE)
+    class Meta:
+        db_table="Users"
+    def __str__(self):
+        return self.user.username
+
 
 class DistModel(models.Model):
     dist_id=models.IntegerField(primary_key=True)
