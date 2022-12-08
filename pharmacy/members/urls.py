@@ -20,10 +20,11 @@ urlpatterns = [
     path('drugs/',views.drugs,name="drugs"),
     path('drugs/deleteDrg/<int:dg_id>',views.deletedrg,name="deletedrg"),
     path('insertDrg/',views.insertDrg,name="insertDrg"),
-    path('drugs/drugs/editDrg/<int:dg_id>',views.editDrg,name="editDrg"),
+    path('drugs/editDrg/<int:dg_id>',views.editDrg,name="editDrg"),
     path('updateDrg/<int:dg_id>',views.updateDrg,name="updateDrg"),
     path('user/',views.user,name="user"),
     path('bill/',views.bill,name="bill"),
-    path('newBill/',views.newBill,name="newBill")
+    path('newBill/',views.newBill,name="newBill"),
+    # path('drugs/editDrg/<int:dg_id>',views.editDrg)
     
 ]

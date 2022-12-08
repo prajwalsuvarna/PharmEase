@@ -5,6 +5,7 @@ from django.contrib import messages
 from members.models import EmpModel, DistModel, DrgModel, Bill,Users
 from django.db.models import Max
 from datetime import datetime
+from django.db.models import Sum
 now = datetime.now()
 
 current_time = now.strftime("%H:%M:%S")
@@ -17,9 +18,13 @@ def index(request):
     emp_count = showAll.count()
     showAll = DistModel.objects.all()
     dist_count = showAll.count()
+    total=Bill.objects.aggregate(Sum('amt'))
+    total=total['amt__sum']
+    print(total)
+    drug_count=DrgModel.objects.all().count()
     if request.user.is_anonymous:
         return redirect("/login")
-    return render(request, 'index.html', {'emp_count': emp_count, 'dist_count': dist_count})
+    return render(request, 'index.html', {'emp_count': emp_count, 'dist_count': dist_count,'total':total,'drug_count':drug_count})
 
 
 def employee(request):
@@ -108,7 +113,8 @@ def insertDrg(request):
           
 def editDrg(request, dg_id):
     editDrgObj = DrgModel.objects.get(dg_id=dg_id)
-    return render(request, 'editDrg.html', {"DrgModel": editDrgObj})
+    data=DistModel.objects.all()
+    return render(request, 'editDrg.html', {"DrgModel": editDrgObj,'data':data})
 
 def loginUser(request):
     if request.method == "POST":

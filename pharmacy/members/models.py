@@ -42,6 +42,9 @@ class DrgModel(models.Model):
     price=models.IntegerField()
     class Meta:
         db_table="Drugs"
+    @property
+    def distname(self):
+        return self.dist_id.dist_name
     def __str__(self):
         return self.dgname
     def __iter__(self):
