@@ -14,6 +14,7 @@ $('#table_db').DataTable();
 <div class="m-2">
     <a href="{% url 'insertEmp' %}" class="btn btn-secondary"> New Employee</a>
 </div>
+<div class="container container-fluid">
 <table id="table_db" class="table table-bordered table-hover" style="width: 100%">
     <thead>
       <tr>
@@ -39,4 +40,5 @@ $('#table_db').DataTable();
     {% endfor %}
     </tbody> 
   </table>
+</div>
 {% endblock content %}

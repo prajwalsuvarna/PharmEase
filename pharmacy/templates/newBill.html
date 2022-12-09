@@ -88,8 +88,13 @@ $('#table_db1').DataTable();
 </tr>
   {% endfor %} 
   </tbody>
+  <tr>
+    <td></td>
+    <td></td>
+    <td><b>Total Amount</b></td>
+    <td>{{saverecord.amt}}</td>
+  </tr>
 </table>
-<p>Total ammount :<span id='amt'>{{saverecord.amt}}</span><p>
   <p>
     <input type="button" value="Print Bill" 
         id="btPrint" onclick="createPDF() " />
@@ -99,10 +104,17 @@ $('#table_db1').DataTable();
 <script>function createPDF() {
     var sTable = document.getElementById('table_db1').innerHTML;
     console.log(sTable)
-    var total_amt=document.getElementById('amt')
-    total_amt=total_amt.textContent
+    var order_id=document.getElementById('sale_id')
+    var Name=document.getElementById('cname')
+    var Phone_no=document.getElementById('pno')
+    order_id=order_id.value;
+    Name=Name.value;
+    console.log(Phone_no)
+    Phone_no=Phone_no.value;
+    
     var style = "<style>";
     style = style + "table {width: 100%;font: 17px Calibri;}";
+    style = style + "h2{width: 100%; text-align:center}";
     style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
     style = style + "padding: 2px 3px;text-align: center;}";
     style = style + "</style>";
@@ -114,10 +126,12 @@ $('#table_db1').DataTable();
     win.document.write('</head>');
     win.document.write('<body>');
     win.document.write('<h2>PharEase</h2>')
+    win.document.write(`<p>Order No:${order_id}</p>`)
+    win.document.write(`<p>Name:${Name}</p>`)
+    win.document.write(`<p>Mobile no:${Phone_no}</p>`)
     win.document.write('<table>')
     win.document.write(sTable); 
-    win.document.write('</table>')
-    win.document.write(`<h3>Total :${total_amt}</h3>`)    
+    win.document.write('</table>')    
     win.document.write('</body></html>');
 
     win.document.close(); 
