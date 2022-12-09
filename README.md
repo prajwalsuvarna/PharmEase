@@ -13,4 +13,4 @@ To-Do's:
 - [X] Table Creation
 - [X] Foreign keys and relations
 - [X] Individual page uI's
-- [ ] Queries(The hard part)
+- [X] Queries
