@@ -276,6 +276,13 @@ def newBill(request):
         saverecord.stock = request.POST.get('stock')
         saverecord.emp_name = str(request.user)
         b=str(a)
+        if d1.stock-int(saverecord.stock)<0:
+            messages.info(request, 'No enough  stock!')
+            return redirect('/newBill')
+        print(type(d1.stock),type(saverecord.stock))
+        d1.stock-=int(saverecord.stock)
+        d1.save()
+        print(d1.stock,saverecord.stock)
         peramt[b]=(int(saverecord.stock) * int(d1.price))
         print(peramt)
         if billcr==None:
@@ -293,7 +300,7 @@ def newBill(request):
         print(peritem2)
         zp=zip(medicines2,peritem2)
         print(zp,type(medicines2))
-        # messages.success(request,'  '+saverecord.drg_id+' is saved successfully!')
+        messages.success(request,' Bill '+saverecord.sale_id+' is saved successfully!')
         return render(request, 'newBill.html', {"data": showAll2,"saverecord":saverecord ,"zp":zp})
     else:
         peramt.clear()

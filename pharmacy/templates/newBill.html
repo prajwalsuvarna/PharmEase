@@ -1,11 +1,21 @@
 {% extends "base.html" %}
+{% block add %}
+<script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" >
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js " defer ></script>
+<script>
+    $(document).ready(function () {
+$('#table_db').DataTable();
+});
+</script>
+  {% endblock add %}
 {% load static %}
 {% block content %}
 <a href="{% url 'bill' %}" onclick="newId();" >Back</a>
   {% if messages %}
     {% for mess in messages %}
-    <div class=" m-2 alert alert-success alert-dismissible fade show" id="alert" role="alert">
-      <b style="color:green;">{{mess}}</b>
+    <div class=" m-2 alert alert-{{mess.tags}} alert-dismissible fade show" id="alert" role="alert">
+      <b >{{mess}}</b>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -55,7 +65,7 @@
   </div>
 </div>
 </form>
-<table class="table table-dark table-bordered">
+<table id="table_db" class="table table-bordered table-hover" style="width: 100%">
   <thead>
     <tr>
       <th>Med id</th>
