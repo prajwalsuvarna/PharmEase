@@ -29,6 +29,7 @@ urlpatterns = [
     path('updateUser/<str:username>',views.updateUser,name="updateUser"),
     path('editUser/<str:username>',views.editUser,name="editUser"),
     path('editEmp/<int:e_id>',views.editEmp,name="editEmp"),
+    path('change_password/<str:username>',views.change_password,name="change_password")
     # path('drugs/editDrg/<int:dg_id>',views.editDrg)
     
 ]

@@ -350,12 +350,29 @@ def updateUser(request, username):
                          updateUser.username+' is updated successfully!')
         print(messages)
         return render(request, 'editUser.html', {"userObj": updateUser})
-        
+
 @login_required(login_url='login')
 def editUser(request, username):
     userObj = User.objects.get(username=username)
     print(userObj.users.emp_id.empname)
     return render(request, 'editUser.html', {"userObj": userObj})
 
+
 def change_password(request,username):
-    pass
+    updateUser = User.objects.get(username=username)
+    Userpswd=User.objects.get(username=username)
+    if request.method == 'POST':
+        print("hello")
+        password1=request.POST['password1']
+        password2=request.POST['password2']
+        print(password1)
+        print(password2)
+        if password1==password2:
+            Userpswd.set_password(password1)
+            Userpswd.save()
+            messages.success(request, 'Profile Updated Successfully! ' )
+            return render(request,'editUser.html',{"userObj": updateUser})
+        else:
+            messages.warning(request, 'Passwords do not match ' )
+            return redirect('/editUser/'+ Userpswd.username)
+    return render(request,'editUser.html')

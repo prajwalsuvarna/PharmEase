@@ -6,8 +6,8 @@
 </div>
 {% if messages %}
 {% for mess in messages %}
-<div class=" m-2 alert alert-success alert-dismissible fade show"  id="alert" role="alert">
-  <b style="color:green;">{{mess}}</b>
+<div class=" m-2 alert alert-{{mess.tags}} alert-dismissible fade show"  id="alert" role="alert">
+  <b >{{mess}}</b>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -40,5 +40,16 @@
   </div>
   <input type="submit" class="btn btn-outline-info" value="Save"/>
 </form>
+ 
+<form class="container mt-5" method="POST"  action="/change_password/{{userObj.username}}">
+  {% csrf_token %}
+  <div class="form-group ">
+    <label for="exampleFormControlInput1" >Update Password</label>
+      <input type="password" class="form-control mt-0" name="password1" id="password" placeholder="Enter new Password">
+      <input type="password" name="password2" class="form-control my-3" id="confirm-password" placeholder="confirm-password">
+    </div>
+    <input type="submit" class="btn btn-outline-info" value="Update"/>
+  </form>
+
 </div>
 {% endblock content %}
