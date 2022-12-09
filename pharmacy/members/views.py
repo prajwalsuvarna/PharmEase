@@ -19,7 +19,10 @@ def index(request):
     perday_rev=Bill.objects.filter(date=crnt_date).aggregate(Sum('amt'))
     print(perday_rev)
     crnt_user=User.objects.get(username=request.user)
-    emp_id=crnt_user.users.emp_id.e_id
+    try:
+        emp_id=crnt_user.users.emp_id.e_id
+    except User.DoesNotExist:
+        emp_id=None
     showAll = EmpModel.objects.all()
     emp_count = showAll.count()
     showAll = DistModel.objects.all()

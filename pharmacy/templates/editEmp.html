@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<a href="{% url 'employee' %}">Go to home </a>
+<div class="ml-4 pl-3 ">
+    <a href="{% url 'employee' %}" class="btn bg-transparent secondary px-0"><i class="fa fa-arrow-left"></i> Back</a>
+</div>
 {% if messages %}
 {% for mess in messages %}
 <div class=" m-2 alert alert-success alert-dismissible fade show"  id="alert" role="alert">
@@ -13,7 +15,7 @@
 {% endfor %}
 {% endif %}
 
-
+<div class="card-body py-md-4">
 <form class="container" method="POST"  action="/updateEmp/{{EmpModel.e_id}}">
 {% csrf_token %}
 <div class="form-group">
@@ -32,6 +34,7 @@
     <label for="exampleFormControlInput1" >Enter Mobile Number</label>
     <input type="number" class="form-control" id="exampleFormControlInput1" name="mobile" value="{{EmpModel.mobile}}" placeholder="1234567809">
   </div>
-  <input type="submit" value="Save"/>
+  <input type="submit" class="btn btn-outline-info" value="Save"/>
 </form>
+</div>
 {% endblock content %}

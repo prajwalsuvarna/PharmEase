@@ -5,13 +5,15 @@
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js " defer ></script>
 <script>
     $(document).ready(function () {
-$('#table_db').DataTable();
+$('#table_db1').DataTable();
 });
 </script>
   {% endblock add %}
 {% load static %}
 {% block content %}
-<a href="{% url 'bill' %}" onclick="newId();" >Back</a>
+<div class="mx-3 ">
+<a href="{% url 'bill' %}" onclick="newId();" class="btn bg-transparent secondary px-0"><i class="fa fa-arrow-left"></i> Back</a>
+</div>
   {% if messages %}
     {% for mess in messages %}
     <div class=" m-2 alert alert-{{mess.tags}} alert-dismissible fade show" id="alert" role="alert">
@@ -22,13 +24,13 @@ $('#table_db').DataTable();
     </div>
     {% endfor %}
     {% endif %}
-
-<form action="" method="post" id="form1"  onsubmit="retain()">
-  {% csrf_token %}
-  <input type="number" name="sale_id" id="sale_id"  placeholder="sale_id"  readonly>
-<input type="text" name="cname" id="cname" placeholder="Enter Customer Name" value="{{saverecord.cname}}" >
-<input type="number" name="phone_no" id="pno" placeholder="9998887771" value="{{saverecord.phone_no}}">
-<input type="number" name="age" id="age" placeholder="20" value="{{saverecord.age}}"> <br/>
+    <div class="card-body py-md-4">
+<form action="" method="post" id="form1"  onsubmit="retain()" class="container-fluid">
+  {% csrf_token %}<lable for="sale_id" class=" m-2">Sale ID</label>
+  <input type="number" class="form-control m-2" name="sale_id" id="sale_id"  placeholder="sale_id"  readonly>
+<input type="text" class="form-control m-2"  name="cname" id="cname" placeholder="Enter Customer Name" value="{{saverecord.cname}}" >
+<input type="number"class="form-control m-2"  name="phone_no" id="pno" placeholder="9998887771" value="{{saverecord.phone_no}}">
+<input type="number" class="form-control m-2" name="age" id="age" placeholder="20" value="{{saverecord.age}}"> <br/>
 <button type="button" class="btn btn-primary p-1 m-2" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Select medicine</button>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -65,7 +67,9 @@ $('#table_db').DataTable();
   </div>
 </div>
 </form>
-<table id="table_db" class="table table-bordered table-hover" style="width: 100%">
+</div>
+<div class="container container-fluid">
+<table id="table_db1" class="table table-bordered table-hover" style="width: 100%">
   <thead>
     <tr>
       <th>Med id</th>
@@ -85,6 +89,41 @@ $('#table_db').DataTable();
   {% endfor %} 
   </tbody>
 </table>
-<p>Total ammount : {{saverecord.amt}}<p>
- 
+<p>Total ammount :<span id='amt'>{{saverecord.amt}}</span><p>
+  <p>
+    <input type="button" value="Print Bill" 
+        id="btPrint" onclick="createPDF()" />
+</p>
+</div>
+{% block addjs %}
+<script>function createPDF() {
+    var sTable = document.getElementById('table_db1').innerHTML;
+    console.log(sTable)
+    var total_amt=document.getElementById('amt')
+    total_amt=total_amt.textContent
+    var style = "<style>";
+    style = style + "table {width: 100%;font: 17px Calibri;}";
+    style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+    style = style + "padding: 2px 3px;text-align: center;}";
+    style = style + "</style>";
+    var win = window.open('', '', 'height=700,width=700');
+
+    win.document.write('<html><head>');
+    win.document.write('<title>Profile</title>');
+    win.document.write(style);          
+    win.document.write('</head>');
+    win.document.write('<body>');
+    win.document.write('<h2>PharEase</h2>')
+    win.document.write('<table>')
+    win.document.write(sTable); 
+    win.document.write('</table>')
+    win.document.write(`<h3>Total :${total_amt}</h3>`)    
+    win.document.write('</body></html>');
+
+    win.document.close(); 
+
+    win.print();   
+}
+</script>
+{% endblock addjs %}
 {% endblock content %}
