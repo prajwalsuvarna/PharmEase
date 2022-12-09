@@ -5,6 +5,7 @@ from django.contrib import messages
 from members.models import EmpModel, DistModel, DrgModel, Bill,Users
 from django.db.models import Max
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.db.models import Sum
 now = datetime.now()
@@ -12,9 +13,8 @@ now = datetime.now()
 current_time = now.strftime("%H:%M:%S")
 crnt_date=now.strftime('%Y-%m-%d')
 
-# Create your views here.
 
-
+@login_required(login_url='login')
 def index(request):
     print(crnt_date)
     perday_rev=Bill.objects.filter(date=crnt_date).aggregate(Sum('amt'))
@@ -38,28 +38,28 @@ def index(request):
         return redirect("/login")
     return render(request, 'index.html', {'emp_count': emp_count, 'dist_count': dist_count,'total':total,'drug_count':drug_count,'users_count':users_count,'cr_time':current_time,'todays_rev':perday_rev,'emp_id':emp_id})
 
-
+@login_required(login_url='login')
 def employee(request):
     if request.user.is_anonymous:
         return redirect("/login")
     showAll = EmpModel.objects.all()
     return render(request, 'employee.html', {'data': showAll})
 
-
+@login_required(login_url='login')
 def distributor(request):
     if request.user.is_anonymous:
         return redirect("/login")
     showAll = DistModel.objects.all()
     return render(request, 'dist.html', {'data': showAll})
 
-
+@login_required(login_url='login')
 def drugs(request):
     if request.user.is_anonymous:
         return redirect("/login")
     showAll = DrgModel.objects.all()
     return render(request, 'drug.html', {'data': showAll})
 
-
+@login_required(login_url='login')
 def user(request):
     if request.user.is_anonymous:
         return redirect("/login")
@@ -67,7 +67,7 @@ def user(request):
     showAll1 = EmpModel.objects.all()
     return render(request, 'user.html', {'data': showAll, 'data1': showAll1})
 
-
+@login_required(login_url='login')
 def insertEmp(request):
     e_id = 1001 if EmpModel.objects.count(
     ) == 0 else EmpModel.objects.aggregate(max=Max('e_id'))["max"]+1
@@ -84,7 +84,7 @@ def insertEmp(request):
     else:
         return render(request, 'insertEmp.html')
 
-
+@login_required(login_url='login')
 def insertDist(request):
     dist_id = 401 if DistModel.objects.count(
     ) == 0 else DistModel.objects.aggregate(max=Max('dist_id'))["max"]+1
@@ -101,7 +101,7 @@ def insertDist(request):
     else:
         return render(request, 'insertDist.html')
 
-
+@login_required(login_url='login')
 def insertDrg(request):
     dg_id = 120 if DrgModel.objects.count(
     ) == 0 else DrgModel.objects.aggregate(max=Max('dg_id'))["max"]+1
@@ -122,7 +122,8 @@ def insertDrg(request):
         return render(request, 'insertDrg.html', {"data": showAll})
     else:
         return render(request, 'insertDrg.html', {"data": showAll})
-          
+
+@login_required(login_url='login')         
 def editDrg(request, dg_id):
     editDrgObj = DrgModel.objects.get(dg_id=dg_id)
     data=DistModel.objects.all()
@@ -144,12 +145,12 @@ def loginUser(request):
 
     return render(request, 'login.html')
 
-
+@login_required(login_url='login')
 def logoutUser(request):
     logout(request)
     return redirect("/login")
 
-
+@login_required(login_url='login')
 def register(request):
     employees=EmpModel.objects.all()
     for emp in employees:
@@ -193,12 +194,12 @@ def register(request):
 
 # edit Employee details
 
-
+@login_required(login_url='login')
 def editEmp(request, e_id):
     editEmpObj = EmpModel.objects.get(e_id=e_id)
     return render(request, 'editEmp.html', {"EmpModel": editEmpObj})
 
-
+@login_required(login_url='login')
 def updateEmp(request, e_id):
     updateEmp = EmpModel.objects.get(e_id=e_id)
     if request.method == 'POST':
@@ -211,14 +212,14 @@ def updateEmp(request, e_id):
         print(messages)
         return render(request, 'editEmp.html', {"EmpModel": updateEmp})
 
-
+@login_required(login_url='login')
 def editDist(request, dist_id):
     editDistObj = DistModel.objects.get(dist_id=dist_id)
     return render(request, 'editDist.html', {"DistModel": editDistObj})
 
 
 
-
+@login_required(login_url='login')
 def updateDist(request, dist_id):
     updateDist = DistModel.objects.get(dist_id=dist_id)
     if request.method == 'POST':
@@ -230,7 +231,7 @@ def updateDist(request, dist_id):
                          updateDist.dist_name+' is updated successfully!')
         print(messages)
         return render(request, 'editDist.html', {"DistModel": updateDist})
-
+@login_required(login_url='login')
 def updateDrg(request, dg_id):
     updateDrg = DrgModel.objects.get(dg_id=dg_id)
     if request.method == 'POST':
@@ -243,25 +244,28 @@ def updateDrg(request, dg_id):
         print(messages)
         return render(request, 'editDrg.html', {"DrgModel": updateDrg})
 
+@login_required(login_url='login')
 def deleteDist(self, dist_id):
     delDist = DistModel.objects.filter(dist_id=dist_id)
     delDist.delete()
     return redirect('/distributor')
 
-
+@login_required(login_url='login')
 def deleteEmp(self, e_id):
     delEmployee = EmpModel.objects.filter(e_id=e_id)
     delEmployee.delete()
     return redirect('/employee')
 
-
+@login_required(login_url='login')
 def bill(request):
     if request.user.is_anonymous:
         return redirect("/login")
     showAll = Bill.objects.all()
     return render(request, 'bill.html', {'data': showAll,})
 
+
 peramt=dict()
+@login_required(login_url='login')
 def newBill(request):
     showAll2 = DrgModel.objects.all()
     saverecord = Bill()
@@ -311,12 +315,13 @@ def newBill(request):
         peramt.clear()
         print(peramt)
         return render(request, 'newBill.html', {"data": showAll2,"peramt":peramt} )
-
+@login_required(login_url='login')
 def deletedrg(self, dg_id):
     delDrg = DrgModel.objects.filter(dg_id=dg_id)
     delDrg.delete()
     return redirect('/drugs')
 
+@login_required(login_url='login')
 @staff_member_required 
 def del_user(request, username):    
     try:
@@ -331,8 +336,9 @@ def del_user(request, username):
     except Exception as e: 
         return render(request, 'user.html',{'err':e.message})
 
-    return redirect('/user') 
+    return redirect('/user')
 
+@login_required(login_url='login')
 def updateUser(request, username):
     updateUser = User.objects.get(username=username)
     if request.method == 'POST':
@@ -344,7 +350,8 @@ def updateUser(request, username):
                          updateUser.username+' is updated successfully!')
         print(messages)
         return render(request, 'editUser.html', {"userObj": updateUser})
-
+        
+@login_required(login_url='login')
 def editUser(request, username):
     userObj = User.objects.get(username=username)
     print(userObj.users.emp_id.empname)
