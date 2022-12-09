@@ -1,17 +1,28 @@
 {% extends "base.html" %}
+{% block add %}
+<script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" >
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js " defer ></script>
+<script>
+    $(document).ready(function () {
+$('#table_db').DataTable();
+});
+</script>
+  {% endblock add %}
 {% load static %}
 {% block content %}
 <div class="m-2">
-    <a href="{% url 'insertEmp' %}">Create new Employee</a>
+    <a href="{% url 'insertEmp' %}" class="btn btn-secondary"> New Employee</a>
 </div>
-<table class="table m-2">
+<table id="table_db" class="table table-bordered table-hover" style="width: 100%">
     <thead>
       <tr>
         <th scope="col">Employee ID</th>
         <th scope="col">Name</th>
         <th scope="col">Email Address</th>
         <th scope="col">Mobile</th>
-        <th scope="col" colspan="2">Edit/Delete</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>

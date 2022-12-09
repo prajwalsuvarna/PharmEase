@@ -1,10 +1,20 @@
 {% extends "base.html" %}
+{% block add %}
+<script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" >
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js " defer ></script>
+<script>
+    $(document).ready(function () {
+$('#table_db').DataTable();
+});
+</script>
+  {% endblock add %}
 {% load static %}
 {% block content %}
 <div class="m-2">
     <a href="{% url 'register' %}" class="btn btn-secondary">Create new User</a>
 </div>
-<table class="table table-hover table-dark">
+<table id="table_db" class="table table-bordered table-hover" style="width: 100%">
     <thead>
         <tr>
           <th scope="col">User ID</th>
@@ -12,8 +22,9 @@
           <th scope="col">Employee Name</th>
           <th scope="col">Email</th>
           <th scope="col">Last logged in</th>
-          <th scope="col">Date Joined</th>
-          <th scope="col" colspan="2">Edit/Delete</th>
+
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -24,9 +35,7 @@
       <td>{{result.users.emp_id}}</td>
       <td>{{result.email}}</td>
       <td>{{result.last_login}}</td>
-      <td>{{result.date_joined}}</td>
-      <td>{{result.dist_id}}</td>
-    
+
       <td><a href="editEmp/{{result.dg_id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
       <td><a href="deleteEmp/{{result.dg_id}}" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash"></i></a></td>
       </tr>

@@ -3,9 +3,10 @@
 {% block content %}
 
         <div class='dashboard-content'>
+            <h3 class='card d-flex justify-content-center flex-column align-items-center'>{{cr_time}}</h3>
             <div class='container'>
-                <div class='card'>
-                    <div class='card-header'>
+                <div class='card' >
+                    <div class='card-header '>
                         <h1>Welcome to PharEase!</h1>
                         <p>Welcome back, {{request.user}}</p>
                     </div>
@@ -13,9 +14,9 @@
                        <div class="box d-flex justify-content-center flex-column align-items-center" data-tilt>No of Employees<h1>{{emp_count}}</h1></div>
                        <div class="box d-flex justify-content-center flex-column align-items-center" data-tilt>No of Distributors<h1>{{dist_count}}</h1></div>
                        <div class="box d-flex justify-content-center flex-column align-items-center" data-tilt>Total Revenue<h1>&#x20b9;{{total}}</h1></div>
-                       <div class="box" data-tilt>4</div>
-                       <div class="box" data-tilt>1</div>
-                       <div class="box" data-tilt>2</div>
+                       <div class="box d-flex justify-content-center flex-column align-items-center" data-tilt>Total Active Users<h1>{{users_count}}</h1></div>
+                       <div class="box d-flex justify-content-center flex-column align-items-center" data-tilt>Total No of Medicines <h1>{{drug_count}}</h1></div>
+                       <div class="box d-flex justify-content-center flex-column align-items-center" data-tilt>Todays Revenue <h1>&#x20b9;{{todays_rev}}</h1></div>
                     </div>
                 </div>
             </div>

@@ -9,22 +9,29 @@ from django.db.models import Sum
 now = datetime.now()
 
 current_time = now.strftime("%H:%M:%S")
+crnt_date=now.strftime('%Y-%m-%d')
 
 # Create your views here.
 
 
 def index(request):
+    print(crnt_date)
+    perday_rev=Bill.objects.filter(date=crnt_date).aggregate(Sum('amt'))
+    print(perday_rev)
+
     showAll = EmpModel.objects.all()
     emp_count = showAll.count()
     showAll = DistModel.objects.all()
     dist_count = showAll.count()
     total=Bill.objects.aggregate(Sum('amt'))
     total=total['amt__sum']
+    perday_rev=perday_rev['amt__sum']
     print(total)
+    users_count=User.objects.all().count()
     drug_count=DrgModel.objects.all().count()
     if request.user.is_anonymous:
         return redirect("/login")
-    return render(request, 'index.html', {'emp_count': emp_count, 'dist_count': dist_count,'total':total,'drug_count':drug_count})
+    return render(request, 'index.html', {'emp_count': emp_count, 'dist_count': dist_count,'total':total,'drug_count':drug_count,'users_count':users_count,'cr_time':current_time,'todays_rev':perday_rev})
 
 
 def employee(request):
@@ -251,9 +258,6 @@ def bill(request):
 
 peramt=dict()
 def newBill(request):
-    # sale_id = 1900 if Bill.objects.count() == 0 else Bill.objects.aggregate( max=Max('sale_id'))["max"]+1
-    # print(sale_id)
-    # peramt={}
     showAll2 = DrgModel.objects.all()
     saverecord = Bill()
     if request.method == 'POST':
