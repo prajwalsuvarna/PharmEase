@@ -24,8 +24,6 @@ $('#table_db').DataTable();
           <th scope="col">Phone No</th>
           <th scope="col">Date</th>
           <th scope="col">Total Amount</th>
-          <th scope="col" >Edit</th>
-          <th scope="col" >Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -36,8 +34,6 @@ $('#table_db').DataTable();
       <td>{{result.phone_no}}</td>
       <td>{{result.date}}</td>
       <td>{{result.amt}}</td>
-      <td><a href="editEmp/{{result.dg_id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
-      <td><a href="deleteEmp/{{result.dg_id}}" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash"></i></a></td>
       </tr>
       {% endfor %}
       </tbody> 

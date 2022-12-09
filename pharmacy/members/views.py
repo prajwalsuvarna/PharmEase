@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from members.models import EmpModel, DistModel, DrgModel, Bill,Users
 from django.db.models import Max
+from django.contrib.admin.views.decorators import staff_member_required
 from datetime import datetime
 from django.db.models import Sum
 now = datetime.now()
@@ -315,3 +316,19 @@ def deletedrg(self, dg_id):
     delDrg = DrgModel.objects.filter(dg_id=dg_id)
     delDrg.delete()
     return redirect('/drugs')
+
+@staff_member_required 
+def del_user(request, username):    
+    try:
+        u = User.objects.get(username = username)
+        u.delete()
+        messages.success(request, "The user is deleted")            
+
+    except User.DoesNotExist:
+        messages.error(request, "User doesnot exist")    
+        return render(request, 'user.html')
+
+    except Exception as e: 
+        return render(request, 'user.html',{'err':e.message})
+
+    return redirect('/user') 
