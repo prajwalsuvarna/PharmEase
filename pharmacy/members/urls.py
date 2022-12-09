@@ -26,6 +26,8 @@ urlpatterns = [
     path('bill/',views.bill,name="bill"),
     path('newBill/',views.newBill,name="newBill"),
     path('del_user/<str:username>',views.del_user,name="del_user"),
+    path('updateUser/<str:username>',views.updateUser,name="updateUser"),
+    path('editUser/<str:username>',views.editUser,name="editUser"),
     path('editEmp/<int:e_id>',views.editEmp,name="editEmp"),
     # path('drugs/editDrg/<int:dg_id>',views.editDrg)
     

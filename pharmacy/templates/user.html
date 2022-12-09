@@ -36,7 +36,7 @@ $('#table_db').DataTable();
       <td>{{result.email}}</td>
       <td>{{result.last_login}}</td>
 
-      <td><a href="editEmp/{{result.username}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+      <td><a href="/editUser/{{result.username}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
       <td><a href="/del_user/{{result.username}}" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash"></i></a></td>
       </tr>
       {% endfor %}

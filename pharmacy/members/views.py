@@ -332,3 +332,23 @@ def del_user(request, username):
         return render(request, 'user.html',{'err':e.message})
 
     return redirect('/user') 
+
+def updateUser(request, username):
+    updateUser = User.objects.get(username=username)
+    if request.method == 'POST':
+        updateUser.first_name = request.POST['first_name']
+        updateUser.last_name = request.POST['last_name']
+        updateUser.email = request.POST['email']
+        updateUser.save()
+        messages.success(request, 'User ' +
+                         updateUser.username+' is updated successfully!')
+        print(messages)
+        return render(request, 'editUser.html', {"userObj": updateUser})
+
+def editUser(request, username):
+    userObj = User.objects.get(username=username)
+    print(userObj.users.emp_id.empname)
+    return render(request, 'editUser.html', {"userObj": userObj})
+
+def change_password(request,username):
+    pass

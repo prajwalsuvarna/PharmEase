@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="ml-4 pl-3 ">
+    <a href="{% url 'user' %}" class="btn bg-transparent secondary px-0"><i class="fa fa-arrow-left"></i> Back</a>
+</div>
+{% if messages %}
+{% for mess in messages %}
+<div class=" m-2 alert alert-success alert-dismissible fade show"  id="alert" role="alert">
+  <b style="color:green;">{{mess}}</b>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="card-body py-md-4">
+<form class="container" method="POST"  action="/updateUser/{{userObj.username}}">
+{% csrf_token %}
+<div class="form-group">
+    <label for="exampleFormControlInput1" > User Name</label>
+    <input type="text" class="form-control" name="username" id="exampleFormControlInput1" value="{{userObj.username}}" placeholder=" " readonly>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1" > Employee Name</label>
+    <input type="text" class="form-control" name="empname" id="exampleFormControlInput1" value="{{userObj.users.emp_id.empname}}" placeholder=" " readonly>
+  </div>
+<div class="form-group">
+  <label for="exampleFormControlInput1" >Edit First Name</label>
+  <input type="text" class="form-control" name="first_name" id="exampleFormControlInput1" value="{{userObj.first_name}}" placeholder="JohnWick">
+</div>
+<div class="form-group">
+    <label for="exampleFormControlInput1" >Edit Last Name</label>
+    <input type="text" class="form-control" name="last_name" id="exampleFormControlInput1" value="{{userObj.last_name}}" placeholder="abcd@gmail.com">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1" >Edit Email Addres</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" name="email" value="{{userObj.email}}" placeholder="1234567809">
+  </div>
+  <input type="submit" class="btn btn-outline-info" value="Save"/>
+</form>
+</div>
+{% endblock content %}
