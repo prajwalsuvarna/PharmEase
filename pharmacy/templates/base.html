@@ -17,24 +17,38 @@
 <body>
     <div class='dashboard'>
     <div class="dashboard-nav">
-        <header><a href="#!" class="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a><a href="/"
-                                                                                   class="brand-logo"><i
-                class="	fa fa-hospital-o"></i> <span>PharmEase</span></a></header>
-        <nav class="dashboard-nav-list "><a href="/" class="dashboard-nav-item "><i class="fa fa-home "></i>
-            Home </a><a
-                href="/employee" class="dashboard-nav-item "><i class="fa fa-male"></i> Employees
-        </a><a
-                href="/drugs" class="dashboard-nav-item"><i class="fa fa-list"></i>Medicines </a>
-                <a
-                href="/distributor" class="dashboard-nav-item"><i class="fa fa-id-card-o"></i> Distributer </a>
-                <a
-                href="/bill" class="dashboard-nav-item"><i class="fa fa-money"></i> Billling </a>
-            <a href="/user" class="dashboard-nav-item "><i
-                    class="fa fa-users"></i> Users </a>
-               
-          <a
-                    href="/logout" class="dashboard-nav-item"><i class="fa fa-sign-out"></i> Logout </a>
-        </nav>
+        <header><a href="#!" class="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a><a href="/"class="brand-logo">
+            <i class="	fa fa-hospital-o"></i> 
+            <span>PharmEase</span></a></header>
+            {% if request.user.is_staff %}
+            <nav class="dashboard-nav-list "><a href="/" class="dashboard-nav-item "><i class="fa fa-home "></i>
+                Home </a><a
+                    href="/employee" class="dashboard-nav-item "><i class="fa fa-male"></i> Employees
+            </a><a
+                    href="/drugs" class="dashboard-nav-item"><i class="fa fa-list"></i> Drugs </a>
+                    <a
+                    href="/distributor" class="dashboard-nav-item"><i class="fa fa-id-card-o"></i> Distributer </a>
+                    <a
+                    href="/bill" class="dashboard-nav-item"><i class="fa fa-money"></i> Billling </a>
+                <a href="/user" class="dashboard-nav-item "><i
+                        class="fa fa-users"></i> Users </a>
+                   
+              <a
+                        href="/logout" class="dashboard-nav-item"><i class="fa fa-sign-out"></i> Logout </a>
+            </nav>
+            {% else %}
+            <nav class="dashboard-nav-list "><a href="/" class="dashboard-nav-item "><i class="fa fa-home "></i>
+                Home </a>
+                    <a
+                    href="/bill" class="dashboard-nav-item"><i class="fa fa-money"></i> Billling </a>
+                <a href="/editEmp/{{request.user.users.emp_id.e_id}}" class="dashboard-nav-item "><i
+                        class="fa fa-users"></i> My Profile </a>
+                   
+              <a
+                        href="/logout" class="dashboard-nav-item"><i class="fa fa-sign-out"></i> Logout </a>
+            </nav>
+            {% endif %}
+      
     </div>
     <div class='dashboard-app'>
         <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fa fa-bars"></i></a></header>

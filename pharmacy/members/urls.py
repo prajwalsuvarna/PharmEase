@@ -25,6 +25,7 @@ urlpatterns = [
     path('user/',views.user,name="user"),
     path('bill/',views.bill,name="bill"),
     path('newBill/',views.newBill,name="newBill"),
+    path('editEmp/<int:e_id>',views.editEmp,name="editEmp"),
     # path('drugs/editDrg/<int:dg_id>',views.editDrg)
     
 ]

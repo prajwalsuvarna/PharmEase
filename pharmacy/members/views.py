@@ -18,7 +18,8 @@ def index(request):
     print(crnt_date)
     perday_rev=Bill.objects.filter(date=crnt_date).aggregate(Sum('amt'))
     print(perday_rev)
-
+    crnt_user=User.objects.get(username=request.user)
+    emp_id=crnt_user.users.emp_id.e_id
     showAll = EmpModel.objects.all()
     emp_count = showAll.count()
     showAll = DistModel.objects.all()
@@ -31,7 +32,7 @@ def index(request):
     drug_count=DrgModel.objects.all().count()
     if request.user.is_anonymous:
         return redirect("/login")
-    return render(request, 'index.html', {'emp_count': emp_count, 'dist_count': dist_count,'total':total,'drug_count':drug_count,'users_count':users_count,'cr_time':current_time,'todays_rev':perday_rev})
+    return render(request, 'index.html', {'emp_count': emp_count, 'dist_count': dist_count,'total':total,'drug_count':drug_count,'users_count':users_count,'cr_time':current_time,'todays_rev':perday_rev,'emp_id':emp_id})
 
 
 def employee(request):
