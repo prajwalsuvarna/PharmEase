@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<a href="{% url 'drugs' %}">Back</a>
+<a href="{% url 'drugs' %}" class=" bg-transparent secondary px-0 ml-2"><i class="fa fa-arrow-left"></i> Back</a>
 {% if messages %}
 {% for mess in messages %}
 <div class=" m-2 alert alert-success alert-dismissible fade show"  id="alert" role="alert">
