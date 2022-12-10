@@ -2,8 +2,9 @@
  Pharmacy Managament Application
  
  ## ER MODEL References
-  
-ER Model to be updated soon
+
+![ER DIAGRAM](https://user-images.githubusercontent.com/97435165/206803903-82b07036-e043-478b-8abf-28190335b344.jpg)
+
 
 To-Do's:
 - [X] User authentication
